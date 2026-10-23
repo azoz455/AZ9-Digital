@@ -40,3 +40,34 @@ if(studioDownload)studioDownload.addEventListener('click',()=>{
  const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='AZ9-project-brief.txt';document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
  document.getElementById('studioStatus').textContent='تم تجهيز ملف الموجز للحفظ.';
 });
+
+
+/* AZ9 Launchpad interactions: entirely local, no fake AI claims */
+(()=>{
+const root=document.getElementById('launchpad');if(!root)return;
+let type='site',level='lean';
+const typeNames={site:'موقع أو منصة رقمية',ai:'أداة ذكاء اصطناعي',store:'متجر إلكتروني',brand:'هوية بصرية'};
+const levels={lean:{name:'انطلاقة اقتصادية',factor:.75,days:'7–14 يومًا'},pro:{name:'احترافي',factor:1.35,days:'2–4 أسابيع'},elite:{name:'تجربة فاخرة',factor:2.1,days:'4–8 أسابيع'}};
+const deliverables={site:['خريطة الصفحات ومسار المستخدم','واجهة متجاوبة للجوال والكمبيوتر','نموذج تواصل واختبار الروابط','دليل نشر وصيانة أولي'],ai:['تحديد المهام وحدود المساعد','تصميم واجهة المحادثة','خطة ربط آمن بمزود AI','اختبارات الخصوصية وجودة الردود'],store:['هيكل التصنيفات والمنتجات','صفحات المنتجات والسلة','تصميم رحلة الطلب','خطة ربط الدفع والشحن'],brand:['اتجاه بصري وشخصية العلامة','لوحة ألوان وخطوط','نظام أيقونات وتطبيقات الهوية','دليل استخدام الملفات']};
+const stages={site:[['تحديد النطاق','الصفحات والجمهور والوظائف'],['تصميم وبناء','تجهيز الواجهة والمحتوى'],['اختبار وإطلاق','الجوال والروابط والنشر']],ai:[['تعريف الاستخدام','المهام ومصادر المعرفة'],['تصميم وربط','واجهة وخادم آمن ومزود مناسب'],['اختبار الجودة','الخصوصية والتكلفة وحالات الفشل']],store:[['تجهيز الكتالوج','التصنيفات والأسعار والبيانات'],['بناء رحلة الشراء','المنتج والسلة والطلب'],['اختبار الإطلاق','الدفع والشحن ورسائل التأكيد']],brand:[['اكتشاف الهوية','الجمهور والتميّز المطلوب'],['تطوير النظام البصري','الشعار والألوان والتطبيقات'],['التسليم والتوثيق','الملفات ودليل الاستخدام']]};
+const range=document.getElementById('budgetRange'),value=document.getElementById('budgetValue');
+function money(n){return Math.round(n).toLocaleString('en-US')+' ر.س'}
+function updateBudget(){value.textContent=money(+range.value)}
+range.addEventListener('input',updateBudget);
+root.querySelectorAll('[data-type]').forEach(b=>b.addEventListener('click',()=>{type=b.dataset.type;root.querySelectorAll('[data-type]').forEach(x=>x.classList.toggle('active',x===b));if(!document.getElementById('launchResult').hidden)generate()}));
+root.querySelectorAll('[data-level]').forEach(b=>b.addEventListener('click',()=>{level=b.dataset.level;root.querySelectorAll('[data-level]').forEach(x=>x.classList.toggle('active',x===b));if(!document.getElementById('launchResult').hidden)generate()}));
+range.addEventListener('change',()=>{if(!document.getElementById('launchResult').hidden)generate()});
+document.getElementById('launchGoal').addEventListener('change',()=>{if(!document.getElementById('launchResult').hidden)generate()});
+function generate(){
+const budget=+range.value,lv=levels[level],goal=document.getElementById('launchGoal').value;
+document.getElementById('launchPlaceholder').hidden=true;document.getElementById('launchResult').hidden=false;
+document.getElementById('estimateBudget').textContent=money(budget);document.getElementById('estimateLevel').textContent=lv.name;
+document.getElementById('deliverableList').innerHTML=deliverables[type].map(x=>'<li>'+x+'</li>').join('');
+document.getElementById('timelineList').innerHTML=stages[type].map((s,i)=>'<div class="timeline-step"><span>0'+(i+1)+'</span><div><b>'+s[0]+'</b><small>'+s[1]+'</small></div></div>').join('');
+const plan='AZ9 DIGITAL | خريطة تنفيذ المشروع\n'+'='.repeat(34)+'\nنوع المشروع: '+typeNames[type]+'\nمستوى التنفيذ: '+lv.name+'\nالميزانية المستهدفة: '+money(budget)+'\nالهدف: '+goal+'\nالمدة التخطيطية الأولية: '+lv.days+'\n\nالمخرجات المقترحة\n'+deliverables[type].map((x,i)=>(i+1)+'. '+x).join('\n')+'\n\nخطة التنفيذ\n'+stages[type].map((s,i)=>(i+1)+'. '+s[0]+' - '+s[1]).join('\n')+'\n\nملاحظات: تقدير إرشادي غير ملزم. قد تتغير التكلفة والمدة حسب النطاق والمحتوى والتكاملات. خدمات AI والدفع والاستضافة الخارجية تحتاج إلى إعداد فعلي.';
+document.getElementById('launchPlanText').value=plan;
+}
+document.getElementById('launchGenerate').addEventListener('click',()=>{generate();document.getElementById('launchResult').scrollIntoView({behavior:'smooth',block:'nearest'})});
+document.getElementById('launchCopy').addEventListener('click',async()=>{const out=document.getElementById('launchPlanText');try{await navigator.clipboard.writeText(out.value);document.getElementById('launchCopy').textContent='تم النسخ ✓'}catch(e){out.hidden=false;out.focus();out.select();document.getElementById('launchCopy').textContent='حدّد النص ثم انسخه'}});
+document.getElementById('launchToContact').addEventListener('click',()=>{const brief=document.getElementById('brief');brief.value='نوع المشروع: '+typeNames[type]+'\nمستوى التنفيذ: '+levels[level].name+'\nالميزانية المستهدفة: '+money(+range.value)+'\nالهدف: '+document.getElementById('launchGoal').value+'\n\nالمخرجات والخطة:\n'+document.getElementById('launchPlanText').value;document.getElementById('service').selectedIndex=type==='ai'?1:type==='store'?3:type==='brand'?5:0;document.getElementById('contact').scrollIntoView({behavior:'smooth'})});
+})();
