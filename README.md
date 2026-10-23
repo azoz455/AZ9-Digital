@@ -15,6 +15,6 @@ Use Render Static Site or Cloudflare Pages with this repository. Publish/root di
 
 ## Before production
 - The AI assistant is a demo only; no AI provider is connected.
-- The contact form opens the user's mail app and currently uses the placeholder `hello@az9.digital`; replace it with a verified mailbox.
+- The contact form generates a local copyable request summary. It does not transmit user data to a server. Connect a verified form/email service before accepting leads online.
 - The design uses Google Fonts when online and falls back to system fonts.
 - Statistics or customer testimonials should not be added unless verified.
