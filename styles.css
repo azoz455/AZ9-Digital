@@ -105,3 +105,32 @@ footer{display:grid;grid-template-columns:1fr 1fr 1fr;gap:30px;align-items:cente
 @media(max-width:850px){.launchpad-grid{grid-template-columns:1fr}.launchpad-output{min-height:0}.launchpad-section{padding:60px 0}}
 @media(max-width:620px){.launchpad-section{padding:54px 0}.launchpad-controls,.launchpad-output{padding:17px;border-radius:21px}.choice{grid-template-columns:34px 1fr;padding:9px;gap:8px}.choice>span{width:34px;height:34px;font-size:19px}.choice b{font-size:11px}.choice small{font-size:8px}.budget-line strong{font-size:21px}.deliverable-list{grid-template-columns:1fr}.estimate-row strong{font-size:14px}.output-placeholder{padding-top:30px}}
 @media(prefers-reduced-motion:reduce){.choice,.button,.service-card{transition:none!important}}
+
+/* One-control premium light/dark theme */
+.theme-toggle{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:42px;padding:8px 12px;border:1px solid #d9dfeb;border-radius:999px;background:linear-gradient(145deg,#fff,#f0f3fb);color:#263654;box-shadow:0 5px 14px #1b2d4c12;cursor:pointer;font-size:11px;font-weight:700;white-space:nowrap;transition:transform .2s,box-shadow .2s}
+.theme-toggle:hover{transform:translateY(-2px);box-shadow:0 8px 20px #1b2d4c20}
+.theme-toggle-icon{display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:linear-gradient(145deg,#ffe7a6,#eeb64d);color:#4b3512;font-size:15px}
+.theme-toggle-label{font-size:11px}
+html[data-theme="dark"]{color-scheme:dark;--ink:#f0f3fb;--muted:#a8b4c9;--paper:#090e18;--line:#263348;--blue:#78a5ff;--cyan:#50e1e2;--violet:#b29aff;--coral:#ff9d91;--mint:#63e0bd;--gold:#f4cb76;--navy:#050912;--shadow:0 18px 45px #0006}
+html[data-theme="dark"] body{background:var(--paper);color:var(--ink)}
+html[data-theme="dark"] .site-header{background:#090e18ed;border-color:#263348}
+html[data-theme="dark"] .brand-name b{color:var(--cyan)}
+html[data-theme="dark"] .site-header nav a{color:#e5eaf5}
+html[data-theme="dark"] .site-header nav small,html[data-theme="dark"] .header-cta small{color:#b7c2d6}
+html[data-theme="dark"] .secondary,html[data-theme="dark"] .studio-card select,html[data-theme="dark"] .studio-card textarea,html[data-theme="dark"] .studio-result textarea{background:#111a2a;color:#edf2fc;border-color:#33425a}
+html[data-theme="dark"] .studio-section{background:radial-gradient(ellipse at 88% 20%,#123b40 0,transparent 32%),radial-gradient(ellipse at 4% 90%,#40252d 0,transparent 34%),linear-gradient(125deg,#0b1020,#0c1320 52%,#101b2a);border-color:#263348}
+html[data-theme="dark"] .studio-card{background:#101827e8;border-color:#344057;box-shadow:0 24px 70px #0005}
+html[data-theme="dark"] .studio-pills span{background:#121d2d;border-color:#344057;color:#d3ddef}
+html[data-theme="dark"] .studio-card-top{border-color:#29374b}
+html[data-theme="dark"] .studio-result{background:linear-gradient(145deg,#102b2b,#191a31);border-color:#344057}
+html[data-theme="dark"] .service-card,html[data-theme="dark"] .launchpad-card,html[data-theme="dark"] .work-card,html[data-theme="dark"] .about-card,html[data-theme="dark"] .contact-card,html[data-theme="dark"] .ai-demo,html[data-theme="dark"] .ai-panel{background:#111a29;border-color:#2c3a50;color:var(--ink)}
+html[data-theme="dark"] .ticker{background:#111a29;border-color:#29374b}
+html[data-theme="dark"] .launchpad-section,html[data-theme="dark"] .about,html[data-theme="dark"] .contact-section,html[data-theme="dark"] .work-section,html[data-theme="dark"] .ai-section{background:#0b111d;color:var(--ink)}
+html[data-theme="dark"] input,html[data-theme="dark"] select,html[data-theme="dark"] textarea{background:#101827;color:#edf2fc;border-color:#33425a}
+html[data-theme="dark"] footer{background:#050912;color:#c5cfdf;border-color:#263348}
+html[data-theme="dark"] .theme-toggle{background:linear-gradient(145deg,#1b2940,#101827);color:#f5f7ff;border-color:#394b67}
+html[data-theme="dark"] .theme-toggle-icon{background:linear-gradient(145deg,#b9caff,#7669c9);color:#10182b}
+html[data-theme="dark"] .hero-art:before{background:radial-gradient(circle at 40% 40%,#16494a 0,#20274c 38%,#462d3a 68%,transparent 70%)}
+html[data-theme="dark"] .secondary{border-color:#39475d}
+@media(max-width:900px){.theme-toggle{padding:7px 9px}.theme-toggle-label{display:none}}
+@media(prefers-reduced-motion:reduce){.theme-toggle,.theme-toggle:hover{transition:none;transform:none}}
