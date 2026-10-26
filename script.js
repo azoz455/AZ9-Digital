@@ -71,3 +71,28 @@ document.getElementById('launchGenerate').addEventListener('click',()=>{generate
 document.getElementById('launchCopy').addEventListener('click',async()=>{const out=document.getElementById('launchPlanText');try{await navigator.clipboard.writeText(out.value);document.getElementById('launchCopy').textContent='تم النسخ ✓'}catch(e){out.hidden=false;out.focus();out.select();document.getElementById('launchCopy').textContent='حدّد النص ثم انسخه'}});
 document.getElementById('launchToContact').addEventListener('click',()=>{const brief=document.getElementById('brief');brief.value='نوع المشروع: '+typeNames[type]+'\nمستوى التنفيذ: '+levels[level].name+'\nالميزانية المستهدفة: '+money(+range.value)+'\nالهدف: '+document.getElementById('launchGoal').value+'\n\nالمخرجات والخطة:\n'+document.getElementById('launchPlanText').value;document.getElementById('service').selectedIndex=type==='ai'?1:type==='store'?3:type==='brand'?5:0;document.getElementById('contact').scrollIntoView({behavior:'smooth'})});
 })();
+
+const themeToggle=document.getElementById('themeToggle');
+if(themeToggle){
+ const root=document.documentElement;
+ const savedTheme=(()=>{try{return localStorage.getItem('az9-theme')}catch(e){return null}})();
+ const applyTheme=theme=>{
+  const dark=theme==='dark';
+  root.dataset.theme=dark?'dark':'light';
+  themeToggle.setAttribute('aria-pressed',String(dark));
+  themeToggle.setAttribute('aria-label',dark?'تفعيل الوضع الفاتح':'تفعيل الوضع الداكن');
+  themeToggle.title=dark?'التبديل إلى الوضع الفاتح':'التبديل إلى الوضع الداكن';
+  const icon=themeToggle.querySelector('.theme-toggle-icon');
+  const label=themeToggle.querySelector('.theme-toggle-label');
+  if(icon)icon.textContent=dark?'☀':'☾';
+  if(label)label.textContent=dark?'فاتح':'داكن';
+  const meta=document.querySelector('meta[name="theme-color"]');
+  if(meta)meta.content=dark?'#090e18':'#fbfaf7';
+ };
+ applyTheme(savedTheme==='dark'?'dark':'light');
+ themeToggle.addEventListener('click',()=>{
+  const next=root.dataset.theme==='dark'?'light':'dark';
+  applyTheme(next);
+  try{localStorage.setItem('az9-theme',next)}catch(e){}
+ });
+}
